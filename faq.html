@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - রমজানের সময়সূচী</title>
+    <style>
+        @font-face {
+            font-family: 'HindSiliguri';
+            src: url('./assets/fonts/HindSiliguriRegular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --border-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #e4e4e4;
+            --text-secondary: #b0b0b0;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+            --border-color: #2d3748;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'HindSiliguri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .download-btn {
+            background: white;
+            color: var(--gradient-start);
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 2rem auto;
+            text-align: center;
+            color: var(--gradient-start);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            color: var(--gradient-start);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+        }
+
+        .faq-container {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--gradient-start);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover h3 {
+            color: white;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1.5rem 1rem;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .faq-answer ul {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gradient-start);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .faq-container {
+                padding: 1.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./" class="logo">
+                <img src="./assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
+                <span>রমজানের সময়সূচী</span>
+            </a>
+            <div class="nav-right">
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+                <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar" class="download-btn">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="text-align: center;">
+            <a href="./" class="back-link">← Back to Home</a>
+        </div>
+
+        <div class="header">
+            <h1>প্রায়শই জিজ্ঞাসিত প্রশ্ন (FAQ)</h1>
+            <p>Frequently Asked Questions</p>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>❓ রমজানের সময়সূচী অ্যাপ কী?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>রমজানের সময়সূচী একটি সম্পূর্ণ বাংলা ইসলামিক অ্যাপ যেখানে পাবেন বাংলাদেশের সকল জেলার সেহরি ও ইফতারের সময়সূচী, পাঁচ ওয়াক্ত নামাজের সময়, সম্পূর্ণ কুরআন শরীফ, প্রয়োজনীয় দোয়া, ডিজিটাল তাসবিহ, কিবলা কম্পাস, যাকাত ক্যালকুলেটর, ইসলামিক আর্টিকেল এবং ইফতার রেসিপি। এটি বিশেষভাবে তৈরি করা হয়েছে বাংলাদেশের মুসলমানদের জন্য।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>📱 অ্যাপটি কি সম্পূর্ণ ফ্রি?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>হ্যাঁ, রমজানের সময়সূচী অ্যাপটি সম্পূর্ণ ফ্রি। সকল ফিচার বিনামূল্যে ব্যবহার করা যায়। তবে অ্যাপটি বিজ্ঞাপন সাপোর্টেড, যা আমাদের অ্যাপটি ফ্রিতে চালু রাখতে সাহায্য করে।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>📵 অ্যাপটি কি অফলাইনে কাজ করে?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>হ্যাঁ! বেশিরভাগ ফিচার অফলাইনে কাজ করে। অফলাইন ফিচার সমূহ:</p>
+                    <ul>
+                        <li>সেহরি ও ইফতারের সময়সূচী</li>
+                        <li>পাঁচ ওয়াক্ত নামাজের সময়</li>
+                        <li>ডিজিটাল তাসবিহ কাউন্টার</li>
+                        <li>ডাউনলোড করা কুরআন সূরা ও অডিও</li>
+                        <li>কিবলা কম্পাস (প্রথমবার লোকেশন নেওয়ার পর)</li>
+                        <li>দোয়া, কালেমা ও আসমাউল হুসনা</li>
+                        <li>যাকাত ক্যালকুলেটর</li>
+                        <li>ইসলামিক আর্টিকেল ও রেসিপি</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>📍 কিবলা কম্পাস কীভাবে ব্যবহার করবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>কিবলা কম্পাস ব্যবহার করতে আপনার ডিভাইসের লোকেশন পারমিশন চালু করুন। অ্যাপটি স্বয়ংক্রিয়ভাবে আপনার অবস্থান শনাক্ত করে সঠিক কিবলার দিক দেখাবে। নিশ্চিত করুন যে আপনার ফোনটি সমতল অবস্থায় রাখছেন এবং কোনো চৌম্বকীয় বস্তুর কাছে নেই।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>📖 কুরআন কীভাবে ডাউনলোড করবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>কুরআন সেকশনে যান এবং যে সূরা ডাউনলোড করতে চান সেটি সিলেক্ট করুন। ডাউনলোড আইকনে ক্লিক করুন। ডাউনলোড সম্পূর্ণ হলে আপনি অফলাইনে অডিও শুনতে পারবেন। স্টোরেজ পারমিশন দেওয়া থাকলে অডিও আপনার ফোনে সেভ হবে।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>🔔 নোটিফিকেশন কীভাবে সেট করবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>সেটিংস সেকশনে যান এবং নোটিফিকেশন অপশন চালু করুন। আপনি সেহরি ও ইফতারের আগে রিমাইন্ডার পাবেন। নির্দিষ্ট সময় সেট করতে পারবেন কখন নোটিফিকেশন পেতে চান। নোটিফিকেশন পারমিশন দিতে ভুলবেন না।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>📿 ডিজিটাল তাসবিহ কীভাবে কাজ করে?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>তাসবিহ সেকশনে যান। স্ক্রিনে ট্যাপ করুন প্রতিবার জিকির করার সময়। কাউন্টার স্বয়ংক্রিয়ভাবে গণনা করবে। বিভিন্ন জিকির আছে যেমন সুবহানাল্লাহ, আলহামদুলিল্লাহ, আল্লাহু আকবার। রিসেট বাটন দিয়ে কাউন্টার শূন্য করতে পারবেন। আপনার জিকির হিস্ট্রি সেভ থাকবে।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>💰 যাকাত ক্যালকুলেটর কীভাবে ব্যবহার করবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>যাকাত ক্যালকুলেটর সেকশনে যান। আপনার মোট সম্পদের পরিমাণ লিখুন। অ্যাপ স্বয়ংক্রিয়ভাবে ২.৫% হিসাব করে যাকাতের পরিমাণ দেখাবে। এটি নিসাব অনুযায়ী হিসাব করা হয়।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>🔒 আমার ডাটা কি নিরাপদ?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>হ্যাঁ, সম্পূর্ণ নিরাপদ। আমরা আপনার কোনো ব্যক্তিগত তথ্য সংগ্রহ বা সংরক্ষণ করি না। সকল ডাটা আপনার ডিভাইসেই থাকে। আমরা শুধু অ্যাপ উন্নত করতে ক্র্যাশ রিপোর্ট ব্যবহার করি। আরও জানতে আমাদের Privacy Policy দেখুন।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>🌍 কোন জেলার সময়সূচী পাওয়া যায়?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>বাংলাদেশের সকল ৬৪টি জেলার সেহরি ও ইফতারের সময়সূচী পাওয়া যায়। আপনার জেলা সিলেক্ট করে সঠিক সময় দেখতে পারবেন। প্রতিটি জেলার জন্য আলাদা আলাদা সময়সূচী রয়েছে।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>🍽️ ইফতার রেসিপি কোথায় পাবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>রেসিপি সেকশনে যান। সেখানে বিভিন্ন ধরনের জনপ্রিয় ইফতার রেসিপি পাবেন যেমন: আলুর চপ, পিঁয়াজু, বেগুনি, হালিম, ছোলা বুট, কাবাব, শরবত ইত্যাদি। প্রতিটি রেসিপিতে উপকরণ ও তৈরির পদ্ধতি দেওয়া আছে।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>📲 অ্যাপ আপডেট কীভাবে পাবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Google Play Store থেকে স্বয়ংক্রিয়ভাবে আপডেট পাবেন। অথবা Play Store এ গিয়ে "রমজানের সময়সূচী" সার্চ করে ম্যানুয়ালি আপডেট করতে পারবেন। নতুন ফিচার ও বাগ ফিক্স পেতে সবসময় আপডেট রাখুন।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>⚠️ অ্যাপে সমস্যা হলে কী করবো?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>প্রথমে অ্যাপ রিস্টার্ট করুন। তাতে কাজ না হলে অ্যাপ ক্যাশ ক্লিয়ার করুন। এরপরও সমস্যা থাকলে আমাদের ইমেইল করুন: support@sbappstore.com। আমরা যত দ্রুত সম্ভব সাহায্য করবো।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>✉️ ফিডব্যাক বা সাজেশন দিতে চাই</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>আমরা আপনার মতামত শুনতে আগ্রহী! Play Store এ রিভিউ দিতে পারেন অথবা আমাদের ইমেইল করুন support@sbappstore.com এ। আপনার প্রতিটি সাজেশন আমাদের কাছে মূল্যবান এবং অ্যাপ উন্নত করতে সাহায্য করে।</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>🌙 রমজান শেষ হলে অ্যাপটি কি আর কাজ করবে না?</h3>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>অবশ্যই কাজ করবে! রমজানের সময়সূচী ছাড়াও আরও অনেক ফিচার আছে যা সারা বছর ব্যবহার করতে পারবেন - কুরআন, দোয়া, তাসবিহ, কিবলা কম্পাস, নামাজের সময়, যাকাত ক্যালকুলেটর, ইসলামিক আর্টিকেল ইত্যাদি। এটি একটি সম্পূর্ণ ইসলামিক অ্যাপ।</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="./">Home</a>
+            <a href="./privacy.html">Privacy Policy</a>
+            <a href="./faq.html">FAQ</a>
+            <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar">Download</a>
+        </div>
+        <p class="footer-text">© 2024 রমজানের সময়সূচী. All rights reserved.</p>
+        <p class="footer-text">Made with ❤️ for Bangladeshi Muslims</p>
+    </footer>
+
+    <script>
+        // Toggle FAQ
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+            
+            // Close other items
+            allItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current item
+            faqItem.classList.toggle('active');
+        }
+
+        // Theme Toggle Function
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Load theme on page load
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            } else {
+                // Check system preference
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const systemTheme = prefersDark ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', systemTheme);
+                themeToggle.textContent = systemTheme === 'dark' ? '☀️' : '🌙';
+            }
+        })();
+    </script>
+</body>
+</html>

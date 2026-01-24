@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রমজানের সময়সূচী - Ramadan Calendar Bangladesh</title>
+    <style>
+        @font-face {
+            font-family: 'HindSiliguri';
+            src: url('./assets/fonts/HindSiliguriRegular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --border-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #e4e4e4;
+            --text-secondary: #b0b0b0;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+            --border-color: #2d3748;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'HindSiliguri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            background: var(--bg-card);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px var(--shadow-light);
+            border-bottom: 2px solid var(--gradient-start);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:not(.download-btn):not(.theme-toggle)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:not(.download-btn):not(.theme-toggle):hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:not(.download-btn):not(.theme-toggle):hover {
+            color: var(--gradient-start);
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--gradient-start);
+            transform: scale(1.05);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero {
+            margin-top: 90px;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--gradient-start);
+            padding: 0;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--gradient-start);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px var(--shadow-medium);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            color: var(--gradient-start);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .screenshots {
+            background: var(--bg-primary);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .screenshots-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .screenshots-scroll {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .screenshots-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .screenshots-scroll::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .screenshots-scroll::-webkit-scrollbar-thumb {
+            background: var(--gradient-start);
+            border-radius: 10px;
+        }
+
+        .screenshot-item {
+            flex: 0 0 auto;
+            width: 280px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .screenshot-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px var(--shadow-medium);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .screenshot-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .screenshot-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            text-align: center;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .screenshot-item:hover .screenshot-label {
+            opacity: 1;
+        }
+
+        .why-choose {
+            background: var(--bg-card);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .why-item {
+            padding: 1.5rem;
+            border-left: 4px solid var(--gradient-start);
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .why-item:hover {
+            transform: translateX(10px);
+            border-left-width: 6px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+        }
+
+        .why-item h3 {
+            color: var(--gradient-start);
+            margin-bottom: 0.5rem;
+        }
+
+        .why-item p {
+            color: var(--text-secondary);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        footer {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gradient-start);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 0.8rem 1rem; }
+            .logo-title { font-size: 1.1rem; }
+            .logo-subtitle { font-size: 0.65rem; }
+            .logo img { width: 38px; height: 38px; }
+            .hero { margin-top: 75px; padding: 3rem 1.5rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+            .nav-links a:not(.download-btn):not(.theme-toggle) { display: none; }
+            .screenshot-item { width: 220px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./" class="logo">
+                <img src="./assets/images/logo.png" alt="রমজানের সময়সূচী" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <div class="logo-title">রমজানের সময়সূচী</div>
+                    <div class="logo-subtitle">Ramadan Calendar BD</div>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#screenshots">Screenshots</a>
+                <a href="./contact.html">Contact</a>
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar" class="download-btn">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🌙 রমজানের সময়সূচী</h1>
+            <p>সকল জেলার সেহরি-ইফতার সময়সূচী, কুরআন, দোয়া, তাসবিহ, কিবলা, যাকাত আরও অনেক কিছু।</p>
+            <div class="hero-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar" class="btn-primary">
+                    <img src="./assets/images/google-play-badge.png" alt="Get it on Google Play">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <h2 class="section-title">প্রধান ফিচার সমূহ</h2>
+        <p class="section-subtitle">এক অ্যাপেই সম্পূর্ণ ইসলামিক সমাধান</p>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon">🕰️</div><h3>রমজানের সময়সূচী</h3><p>বাংলাদেশের সব জেলার সেহরি ও ইফতার সময়সূচী। পাঁচ ওয়াক্ত নামাজের সময়। Offline দেখার সুবিধা।</p></div>
+            <div class="feature-card"><div class="feature-icon">📖</div><h3>আল কুরআন</h3><p>সূরা ক্রমে সম্পূর্ণ কুরআন। আরবি, বাংলা ও ইংরেজি অনুবাদ। আয়াত-by-আয়াত অডিও। প্রতিটি আয়াতের তাফসির। বুকমার্ক ও সার্চ সুবিধা।</p></div>
+            <div class="feature-card"><div class="feature-icon">📿</div><h3>ডিজিটাল তাসবিহ</h3><p>আধুনিক Digital Tasbih Counter। নামাজের পর, সকাল, সন্ধ্যা ও ঘুমানোর আগের জিকির। রিসেট ও সেইভ সুবিধা।</p></div>
+            <div class="feature-card"><div class="feature-icon">🧭</div><h3>কিবলা কম্পাস</h3><p>Accurate Qibla Direction। Location-based smart compass। সহজ ও নির্ভরযোগ্য ব্যবহার।</p></div>
+            <div class="feature-card"><div class="feature-icon">🤲</div><h3>প্রয়োজনীয় দোয়া</h3><p>রোজার নিয়ত ও ইফতারের দোয়া। আজান, ওযু ও মসজিদের দোয়া। ক্ষমা প্রার্থনা ও হেদায়েতের দোয়া।</p></div>
+            <div class="feature-card"><div class="feature-icon">🕌</div><h3>নামাজের নিয়ম</h3><p>পাঁচ ওয়াক্ত নামাজের নিয়ম। তারাবী, তাহাজ্জুদ, লাইলাতুল কদর। সালাতুত তাসবিহ ও শবে বরাত।</p></div>
+            <div class="feature-card"><div class="feature-icon">🌸</div><h3>আসমাউল হুসনা</h3><p>আল্লাহর ৯৯টি নাম। আরবি ও বাংলা। প্রতিটি নামের অর্থ ও ফজিলত।</p></div>
+            <div class="feature-card"><div class="feature-icon">💰</div><h3>যাকাত ক্যালকুলেটর</h3><p>Income-based যাকাত হিসাব। সহজ ও Aesthetic UI। দ্রুত ও নির্ভুল গণনা।</p></div>
+            <div class="feature-card"><div class="feature-icon">🍽️</div><h3>রমজানের খাদ্যাভ্যাস</h3><p>সাহরি ও ইফতারের খাবার গাইড। বিভিন্ন রোগীর রোজা। স্বাস্থ্যসম্মত রোজার টিপস।</p></div>
+            <div class="feature-card"><div class="feature-icon">🥘</div><h3>ইফতার রেসিপি</h3><p>আলুর চপ, পিঁয়াজু, বেগুনি। হালিম, ছোলা বুট, কাবাব। ঘরে তৈরি জনপ্রিয় রেসিপি।</p></div>
+            <div class="feature-card"><div class="feature-icon">📚</div><h3>ইসলামিক আর্টিকেল</h3><p>রমজান কী ও রোজার গুরুত্ব। রোজা ভঙ্গের কারণ। রমজানে করণীয় ও বর্জনীয়।</p></div>
+            <div class="feature-card"><div class="feature-icon">📿</div><h3>কালেমা সমূহ</h3><p>সব কালেমা। বাংলা, আরবি ও ইংরেজি টেক্সট। অর্থসহ সহজ ব্যাখ্যা।</p></div>
+        </div>
+    </section>
+
+    <section class="screenshots" id="screenshots">
+        <div class="screenshots-container">
+            <h2 class="section-title">App Screenshots</h2>
+            <p class="section-subtitle">অ্যাপের বিভিন্ন স্ক্রিনশট দেখুন</p>
+            <div class="screenshots-scroll">
+                <div class="screenshot-item"><img src="./assets/images/screenshots/1.jpg" alt="Home Screen"><div class="screenshot-label">Home Screen</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/2.jpg" alt="Ramadan Timetable"><div class="screenshot-label">সেহরি-ইফতার সময়সূচী</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/3.jpg" alt="Al Quran"><div class="screenshot-label">আল কুরআন</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/4.jpg" alt="Tasbih Counter"><div class="screenshot-label">ডিজিটাল তাসবিহ</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/5.jpg" alt="Qibla Compass"><div class="screenshot-label">কিবলা কম্পাস</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/6.jpg" alt="Duas"><div class="screenshot-label">দোয়া সমূহ</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/7.jpg" alt="Prayer Rules"><div class="screenshot-label">নামাজের নিয়ম</div></div>
+                <div class="screenshot-item"><img src="./assets/images/screenshots/8.jpg" alt="Settings"><div class="screenshot-label">Settings</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="why-choose">
+            <h2 class="section-title">কেন এই অ্যাপ ব্যবহার করবেন?</h2>
+            <div class="why-grid">
+                <div class="why-item"><h3>✅ সম্পূর্ণ ইসলামিক সমাধান</h3><p>এক অ্যাপেই সব ইসলামিক ফিচার - সময়সূচী, কুরআন, দোয়া, তাসবিহ, কিবলা এবং আরও অনেক কিছু।</p></div>
+                <div class="why-item"><h3>📍 বাংলাদেশভিত্তিক</h3><p>বাংলাদেশের সব জেলার নির্ভুল সেহরি-ইফতার ও নামাজের সময়সূচী।</p></div>
+                <div class="why-item"><h3>📵 Offline সুবিধা</h3><p>ইন্টারনেট ছাড়াই সকল ফিচার ব্যবহার করুন। যেকোনো সময়, যেকোনো জায়গায়।</p></div>
+                <div class="why-item"><h3>🎨 সুন্দর ডিজাইন</h3><p>সহজ, সুন্দর ও ব্যবহারবান্ধব ইন্টারফেস। বাংলা + English + Banglish friendly।</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>রমজান হোক ইবাদত ও আত্মশুদ্ধির মাস</h2>
+        <p>রমজানের সময়সূচী হোক আপনার প্রতিদিনের বিশ্বস্ত ইসলামিক সঙ্গী</p>
+        <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar" class="btn-primary">
+            <img src="./assets/images/google-play-badge.png" alt="Get it on Google Play">
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="./">Home</a>
+            <a href="./privacy.html">Privacy Policy</a>
+            <a href="./faq.html">FAQ</a>
+            <a href="./contact.html">Contact</a>
+            <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar">Download</a>
+        </div>
+        <p class="footer-text">© 2024 রমজানের সময়সূচী. All rights reserved.</p>
+        <p class="footer-text">Made with ❤️ for Bangladeshi Muslims</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const themeIcon = document.getElementById('themeIcon');
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('themeIcon');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const systemTheme = prefersDark ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', systemTheme);
+                themeIcon.textContent = systemTheme === 'dark' ? '☀️' : '🌙';
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - রমজানের সময়সূচী</title>
+    <style>
+        @font-face {
+            font-family: 'HindSiliguri';
+            src: url('./assets/fonts/HindSiliguriRegular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --border-color: #e0e0e0;
+            --highlight-bg: #f0f4ff;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #e4e4e4;
+            --text-secondary: #b0b0b0;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+            --border-color: #2d3748;
+            --highlight-bg: #1e3a5f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'HindSiliguri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            background: var(--bg-card);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px var(--shadow-light);
+            border-bottom: 2px solid var(--gradient-start);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--gradient-start);
+            transform: scale(1.05);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 2rem auto;
+            text-align: center;
+            color: var(--gradient-start);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            color: var(--gradient-start);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+        }
+
+        .contact-content {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gradient-start);
+            box-shadow: 0 10px 25px var(--shadow-light);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            color: var(--gradient-start);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-card a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .contact-card a:hover {
+            background: var(--gradient-start);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .social-section {
+            background: var(--highlight-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .social-section h3 {
+            color: var(--gradient-start);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .facebook-btn {
+            background: #1877f2;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+        }
+
+        .facebook-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4);
+        }
+
+        .playstore-btn {
+            background: linear-gradient(135deg, #01875f, #4caf50);
+            box-shadow: 0 4px 15px rgba(1, 135, 95, 0.3);
+        }
+
+        .playstore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(1, 135, 95, 0.4);
+        }
+
+        .info-box {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            border-left: 4px solid var(--gradient-start);
+        }
+
+        .info-box h4 {
+            color: var(--gradient-start);
+            margin-bottom: 1rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        footer {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gradient-start);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .contact-content { padding: 2rem 1.5rem; }
+            .container { padding: 0 1rem; }
+            .logo-title { font-size: 1.1rem; }
+            .logo img { width: 38px; height: 38px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./" class="logo">
+                <img src="./assets/images/logo.png" alt="রমজানের সময়সূচী" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <div class="logo-title">রমজানের সময়সূচী</div>
+                    <div class="logo-subtitle">Ramadan Calendar BD</div>
+                </div>
+            </a>
+            <div class="nav-right">
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar" class="download-btn">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="text-align: center;">
+            <a href="./" class="back-link">← Back to Home</a>
+        </div>
+
+        <div class="header">
+            <h1>যোগাযোগ করুন</h1>
+            <p>Contact Us - Get in Touch</p>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">🏢</div>
+                    <h3>App Publisher</h3>
+                    <p>Official Publisher Account</p>
+                    <a href="https://play.google.com/store/search?q=pub:Samiul%27s+Apps&c=apps" target="_blank">
+                        Samiul's Apps
+                    </a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">👨‍💻</div>
+                    <h3>Developer</h3>
+                    <p>Lead App Developer</p>
+                    <p style="background: var(--highlight-bg); padding: 0.5rem 1.5rem; border-radius: 8px; margin: 0;">Samiul Basir</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <h3>Email Support</h3>
+                    <p>Send us your queries</p>
+                    <a href="mailto:samiuls.apps@gmail.com">
+                        samiuls.apps@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <div class="social-section">
+                <h3>Connect With Us</h3>
+                <div class="social-buttons">
+                    <a href="https://www.facebook.com/samiulapps" target="_blank" class="social-btn facebook-btn">
+                        <span style="font-size: 1.5rem;">📘</span>
+                        Follow on Facebook
+                    </a>
+                    <a href="https://play.google.com/store/search?q=pub:Samiul%27s+Apps&c=apps" target="_blank" class="social-btn playstore-btn">
+                        <span style="font-size: 1.5rem;">📱</span>
+                        View All Our Apps
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📧 যোগাযোগ করুন যদি:</h4>
+                <p>
+                    • অ্যাপে কোনো সমস্যা হয়<br>
+                    • নতুন ফিচার সাজেশন থাকে<br>
+                    • বাগ রিপোর্ট করতে চান<br>
+                    • ফিডব্যাক শেয়ার করতে চান<br>
+                    • সাপোর্ট প্রয়োজন হয়
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h4>⏰ Response Time</h4>
+                <p>
+                    আমরা সাধারণত ২৪-৪৮ ঘণ্টার মধ্যে রিপ্লাই দিয়ে থাকি। আপনার প্রতিটি মেসেজ আমাদের কাছে গুরুত্বপূর্ণ এবং আমরা দ্রুততম সময়ে সাহায্য করার চেষ্টা করি।
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="./">Home</a>
+            <a href="./privacy.html">Privacy Policy</a>
+            <a href="./faq.html">FAQ</a>
+            <a href="./contact.html">Contact</a>
+            <a href="https://play.google.com/store/apps/details?id=com.sbappstore.romjanbanglacalendar">Download</a>
+        </div>
+        <p class="footer-text">© 2024 রমজানের সময়সূচী. All rights reserved.</p>
+        <p class="footer-text">Made with ❤️ for Bangladeshi Muslims</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const themeIcon = document.getElementById('themeIcon');
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('themeIcon');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const systemTheme = prefersDark ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', systemTheme);
+                themeIcon.textContent = systemTheme === 'dark' ? '☀️' : '🌙';
+            }
+        })();
+    </script>
+</body>
+</html>
